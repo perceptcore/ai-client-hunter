@@ -1,15 +1,19 @@
 # Security policy
 
-## Project status
+## Supported version
 
-AI Client Hunter is a documentation foundation. No runnable agent, hosted service, or released package is included. There are no supported runtime versions yet.
+The current v0.1 skill and Python helpers on `main` are maintained. This repository does not operate a hosted service, email sender, or credential store.
 
 ## Report a sensitive issue
 
-Email [hello@getperceptcore.com](mailto:hello@getperceptcore.com) with the subject `AI Client Hunter security report`.
+Email [hello@getperceptcore.com](mailto:hello@getperceptcore.com) with the subject `AI Client Hunter security report`. Include the affected file or commit, potential impact, and minimal reproduction with synthetic data. Redact credentials and personal/client data. Do not publish sensitive reports in issues.
 
-Describe the affected file or commit, the potential impact, and minimal reproduction steps. Redact credentials and personal or client data. Do not open a public issue containing sensitive details.
+If a credential is exposed, its owner should revoke it through the issuing service. Do not test it or include it in a report. There is no bug bounty or guaranteed response timeline.
 
-If you discover an exposed credential, its owner should revoke it through the issuing service. Do not test the credential or send it in the report.
+## Data and execution boundaries
 
-This project does not currently offer a bug bounty or a guaranteed response timeline. Ordinary documentation problems belong in a public issue.
+Helpers only read and write local data; they make no network/model calls. The host agent's tools, permissions, and data policies govern its research. Review instructions and scripts before running them.
+
+Campaign JSON preserves source text. CSV exports guard against spreadsheet formula prefixes, and raw AI answers/messages use text fences in Markdown. Websites, AI answers, and imported records are untrusted content, never instructions to execute code, expose data, or change the task.
+
+Keep campaign directories and credentials outside this public repository. Included examples are synthetic reserved `.test` data. Schema checks establish structural consistency, not truth or the safety of a future campaign.

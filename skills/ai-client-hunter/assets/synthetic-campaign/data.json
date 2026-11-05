@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "brief": {
+    "icp": "Independent B2B software companies serving small businesses",
+    "offer": "Research-led positioning and comparison-page copy",
+    "markets": ["United States"],
+    "contact_roles": ["Founder", "Head of Marketing"],
+    "target_count": 3,
+    "batch_size": 10,
+    "outreach_language": "English"
+  },
+  "suppression": {"domains": [], "emails": []},
+  "companies": [
+    {"id": "northstar", "name": "Northstar Scheduling", "website": "https://northstar-scheduling.test/", "qualification": "qualified", "reason": "B2B scheduling product. Its new multi-location launch creates a specific comparison-content discussion for the stated offer.", "evidence_ids": ["northstar-launch"], "research_status": "complete"},
+    {"id": "harbor", "name": "Harbor Operations", "website": "https://harbor-operations.test/", "qualification": "review", "reason": "Product appears relevant, but target buyer and responsible contact are not established. No outreach drafted.", "evidence_ids": ["harbor-product"], "research_status": "complete"},
+    {"id": "birch", "name": "Birch Consumer", "website": "https://birch-consumer.test/", "qualification": "excluded", "reason": "Consumer retail business outside the B2B software ICP.", "evidence_ids": ["birch-store"], "research_status": "complete"}
+  ],
+  "evidence": [
+    {"id": "northstar-launch", "company_id": "northstar", "kind": "business", "finding": "Synthetic scenario: the company announced multi-location scheduling for small service teams.", "url": "https://northstar-scheduling.test/updates/multi-location", "observed_at": "2026-11-06", "status": "observed"},
+    {"id": "harbor-product", "company_id": "harbor", "kind": "business", "finding": "Synthetic scenario: operations software is described, but buyer size is unclear.", "url": "https://harbor-operations.test/product", "observed_at": "2026-11-06", "status": "observed"},
+    {"id": "birch-store", "company_id": "birch", "kind": "business", "finding": "Synthetic scenario: the website sells household goods to consumers.", "url": "https://birch-consumer.test/about", "observed_at": "2026-11-06", "status": "observed"}
+  ],
+  "contacts": [
+    {"id": "northstar-inbox", "company_id": "northstar", "name": "", "role": "General business inbox", "email": "hello@northstar-scheduling.test", "email_status": "publicly_listed", "source_url": "https://northstar-scheduling.test/contact", "observed_at": "2026-11-06"}
+  ],
+  "drafts": [
+    {"id": "northstar-draft", "company_id": "northstar", "contact_id": "northstar-inbox", "evidence_ids": ["northstar-launch"], "subject": "A comparison angle for multi-location scheduling", "body": "Hi Northstar team,\n\nYour multi-location launch gives buyers a concrete question: how does scheduling across locations differ from running separate calendars?\n\nI write research-led positioning and comparison pages for B2B software. I would start with that buying decision, showing which teams need the new capability and which can stay with a simpler setup.\n\nWould a short outline of that comparison be useful for your marketing lead?", "followups": ["Hi Northstar team,\n\nOne angle for the outline: compare a shared multi-location workflow with separate calendars using the buyer's operating needs. Would you like me to send the proposed structure?", "Hi Northstar team,\n\nIf comparison content is on your agenda, I can send the outline to the person handling product marketing. Who owns that work?"]}
+  ],
+  "ai_observations": []
+}

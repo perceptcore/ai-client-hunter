@@ -1,0 +1,2 @@
+id,company_id,company,qualification,name,role,email,email_status,source_url,observed_at,deliverability
+northstar-inbox,northstar,Northstar Scheduling,qualified,,General business inbox,hello@northstar-scheduling.test,publicly_listed,https://northstar-scheduling.test/contact,2026-11-06,unverified

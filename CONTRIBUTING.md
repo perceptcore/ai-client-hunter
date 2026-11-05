@@ -2,31 +2,32 @@
 
 Help agencies find stronger reasons to start a business conversation.
 
-## Current stage
+## Project shape
 
-This repository is at the documentation foundation stage. There is no executable skill, application, installation command, or test suite yet. Contributions should make the planned workflow concrete without presenting proposed behavior as available functionality.
+v0.1 is a host-run Agent Skill with local Python helpers. The agent performs public-source research and drafting; scripts validate and export local data. Keep the installed skill self-contained. Changes must work when only `skills/ai-client-hunter` is installed, without sibling skills or checkout-specific paths.
 
 ## Propose a change
 
-Open a feature proposal describing the user, decision, inputs, expected output, and evidence needed. Check existing issues first. For a substantial implementation, agree on the approach in an issue before building it.
-
-Useful early contributions include research briefs, evidence and contact formats, documented source limitations, and reproducible examples using synthetic or explicitly publishable data.
+Open an issue explaining the user, decision, input, expected result, and evidence needed. Discuss substantial integrations or schema changes before implementation. State host-tool, account, cost, and compatibility requirements. Keep scope and permissions under the user's control.
 
 ## Submit a pull request
 
 1. Make a focused change on a branch in your fork.
-2. Explain the problem, resulting behavior or documentation change, and how you checked it.
-3. Keep all project documentation in English. Clearly label planned functionality.
-4. Check relative links and Markdown rendering. For future code, include the setup and relevant checks needed to reproduce the behavior.
+2. Explain the problem, resulting behavior, and relevant validation.
+3. Run `python -m unittest discover -s tests -v` with Python 3.10+.
+4. Check links and installed resource paths. Exercise changed helpers on synthetic data and inspect actual exports.
+5. For behavior changes, test missing sources, unknown contacts, suppression, and interrupted/resumed work. Do not rely on matching generated wording.
+
+Keep documentation in English and runtime helpers standard-library-only unless a dependency has a clear, agreed benefit. Document versioning and compatibility for data-format changes.
 
 ## Evidence standard
 
-- Separate observed facts from interpretations and recommendations.
-- Include the source URL and collection date for externally sourced findings.
-- Keep original AI answer context when using an answer as evidence. State the model or interface and run date when known.
-- Label contact verification accurately. Do not equate an inferred address, SMTP acceptance, or a sent message with inbox placement.
-- Do not invent buyer intent, business problems, contact details, or campaign results.
+- Separate observations from interpretations and recommendations.
+- Include source URLs and collection dates for external findings and contacts.
+- Preserve original AI context and record missing metadata explicitly.
+- Do not equate public email listing, SMTP acceptance, or sent mail with inbox placement.
+- Do not invent buyer intent, contacts, business problems, or campaign results.
 
-Do not submit real prospect lists, private messages, client information, API keys, or credentials. Use synthetic fixtures when a workflow needs personal or account data. Follow [SECURITY.md](SECURITY.md) for sensitive reports.
+Do not submit live prospect lists, private client data, real messages, credentials, or account information. Use reserved `.test` domains and synthetic fixtures. Follow [SECURITY.md](SECURITY.md) for sensitive reports.
 
-By submitting a contribution, you confirm that you have the right to share it and agree that your contribution is licensed under this repository's [MIT license](LICENSE).
+By contributing, you confirm the right to share the material and agree to the repository's [MIT license](LICENSE).

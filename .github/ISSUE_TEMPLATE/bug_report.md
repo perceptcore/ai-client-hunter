@@ -8,11 +8,11 @@ assignees: ""
 
 ## Problem
 
-What is incorrect in the current documentation or repository? Planned functionality is not yet implemented.
+What failed in the current skill, helper, export, or documentation? State the commit/version, host agent, Python version, and relevant command or request.
 
 ## Location and reproduction
 
-Include the file or commit, relevant steps, and environment if applicable.
+Include the relevant steps and a minimal synthetic input that reproduces the problem. Do not attach live campaign data.
 
 ## Expected and actual result
 
