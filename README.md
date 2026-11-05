@@ -8,6 +8,15 @@ AI Client Hunter takes your offer, researches companies worth approaching, finds
 
 Built for founders, agencies and consultants who need a concrete answer to: who should I contact, and why would they care?
 
+## Why use it
+
+- **Spend tokens on new evidence.** Reuse saved findings, search for missing facts, and stop once the person's role and contact route are supported. Keep the next session focused on unfinished work.
+- **Qualify before you pitch.** Filter companies against your ICP and offer. Every shortlisted company needs a specific reason it fits, with sources you can inspect.
+- **Find the role that matters.** Look for the person responsible for your offer, check their current role, and keep generic inboxes separate from personal contacts.
+- **Give every message a reason.** Turn an observed company finding into a relevant opening, a concrete offer and a clear next step. Get a first email and two follow-ups together.
+- **Keep the workflow ready.** Install once and reuse the research, qualification and drafting instructions across campaigns. Bring an existing company list or continue prior work.
+- **Use the AI you already have.** Run through your agent's search and browser tools, with no required enrichment subscription or separate prospecting server.
+
 ## Install
 
 ```sh
@@ -51,7 +60,7 @@ Save the shortlist as CSV and the drafts as Markdown, or request a table for a s
 
 The [skill](skills/ai-client-hunter/SKILL.md) is a Markdown workflow. Your agent does the research with its existing search and browser tools. You keep the files. There is no separate server or enrichment account to set up.
 
-It researches and drafts; it does not guess addresses, probe mail servers or send messages. Published contacts still need review. Research quality depends on the host agent, available tools and public evidence; no conversion or cost advantage has been measured.
+It researches and drafts; it does not guess addresses, probe mail servers or send messages. Published contacts still need review. Research quality depends on the host agent, available tools and public evidence.
 
 ## Contribute
 
