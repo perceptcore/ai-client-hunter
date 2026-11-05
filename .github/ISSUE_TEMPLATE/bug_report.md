@@ -8,7 +8,7 @@ assignees: ""
 
 ## Problem
 
-What failed in the current skill, helper, export, or documentation? State the commit/version, host agent, Python version, and relevant command or request.
+What failed in the skill or documentation? State the commit/version, host agent, and relevant request.
 
 ## Location and reproduction
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "AI Client Hunter"
-  short_description: "Find decision makers and sourced professional contact routes"
-  default_prompt: "Use $ai-client-hunter to research prospects for my offer, find current decision makers with attributable public professional routes, and draft evidence-backed outreach."
+  short_description: "Research prospects, find contacts, and draft outreach"
+  default_prompt: "Use $ai-client-hunter to research companies for my offer, find relevant public business contacts, and draft sourced outreach."
