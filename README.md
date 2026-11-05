@@ -1,8 +1,10 @@
 # AI Client Hunter
 
-**You shipped the product. Now find someone to sell it to.**
+**Your AI writes code. Your pipeline is still empty.**
 
-Give Claude Code or Codex a prospecting job. AI Client Hunter takes your offer, researches companies worth approaching, finds the people responsible, and drafts an opening backed by sources.
+Put Claude or Codex on prospecting duty.
+
+AI Client Hunter takes your offer, researches companies worth approaching, finds the people responsible, and drafts an opening backed by sources.
 
 Built for founders, agencies and consultants who need a concrete answer to: who should I contact, and why would they care?
 
