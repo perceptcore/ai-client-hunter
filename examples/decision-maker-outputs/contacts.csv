@@ -1,0 +1,4 @@
+id,company_id,company,qualification,name,role,email,email_status,source_url,observed_at,deliverability,contact_kind,identity_status,role_fit,best_channel_type,best_channel,role_evidence_urls
+northstar-inbox,northstar,Northstar Scheduling,qualified,,General business inbox,hello@northstar-scheduling.test,publicly_listed,https://northstar-scheduling.test/contact,2026-11-06,unverified,generic_inbox,legacy_unverified,unknown,,,
+northstar-jo,northstar,Northstar Scheduling,qualified,Jo Ellis,Head of Marketing,,not_found,https://northstar-scheduling.test/team,2026-11-06,unverified,person,supported,primary,professional_profile,https://profiles.test/jo-ellis,https://northstar-scheduling.test/team
+northstar-lee,northstar,Northstar Scheduling,qualified,Lee Morgan,Founder,,not_found,https://northstar-scheduling.test/history,2026-11-06,unverified,person,historical,fallback,,,https://northstar-scheduling.test/history

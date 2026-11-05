@@ -39,7 +39,8 @@ def fenced(value):
     return f'{fence}text\n{value}\n{fence}'
 
 
-def render(d):
+def render(d, campaign_folder=None):
+    from contact_models import person_route, selected_contacts
     companies = {c['id']: c for c in d['companies']}
     evidence = {e['id']: e for e in d['evidence']}
     prospects = [dict(c, evidence_ids=';'.join(c['evidence_ids']),
@@ -47,6 +48,14 @@ def render(d):
     contacts = [dict(c, company=companies[c['company_id']]['name'],
                      qualification=companies[c['company_id']]['qualification'],
                      deliverability='unverified') for c in d['contacts'] if not contact_suppressed(d, c)]
+    extra_fields = []
+    if d['schema_version'] == 2:
+        extra_fields = ['contact_kind', 'identity_status', 'role_fit', 'best_channel_type', 'best_channel', 'role_evidence_urls']
+        for contact in contacts:
+            route = person_route(contact)
+            contact.update(best_channel_type=route['type'] if route else '',
+                           best_channel=route['value'] if route else '',
+                           role_evidence_urls=';'.join(s['url'] for s in contact['role_evidence']))
     briefs = ['# Account briefs', '', 'Research findings require source review. Script validation checks structure, not truth.', '']
     for c in d['companies']:
         briefs += [f'## {md(c["name"])}', '', f'- Website: {c["website"]}',
@@ -72,7 +81,10 @@ def render(d):
         if status in ('held', 'suppressed'):
             continue
         contact = next((r for r in contacts if r['id'] == draft.get('contact_id')), None)
-        outreach += [f'Recipient: {md(contact.get("email") if contact and contact.get("email") else "Not found")}',
+        route = person_route(contact) if contact and d['schema_version'] == 2 else None
+        recipient = route['value'] if route else contact.get('email') if contact and contact.get('email') else 'Not found'
+        outreach += [f'Recipient: {md(recipient)}',
+                     f'Channel: {route["type"] if route else "email draft; recipient unverified"}',
                      f'Subject: {md(draft["subject"])}', '', fenced(draft['body']), '']
         for n, followup in enumerate(draft['followups'], 1):
             outreach += [f'### Follow-up {n}', '', fenced(followup), '']
@@ -81,10 +93,51 @@ def render(d):
             e = evidence[eid]
             outreach += [f'- {md(eid)}: {md(e["finding"])} — {e.get("url") or "user/tool-provided AI answer"}']
         outreach += ['']
-    return {'prospects.csv': csv_text(['id', 'name', 'domain', 'website', 'qualification', 'reason', 'research_status', 'evidence_ids', 'suppressed'], prospects),
-            'contacts.csv': csv_text(['id', 'company_id', 'company', 'qualification', 'name', 'role', 'email', 'email_status', 'source_url', 'observed_at', 'deliverability'], contacts),
+    outputs = {'prospects.csv': csv_text(['id', 'name', 'domain', 'website', 'qualification', 'reason', 'research_status', 'evidence_ids', 'suppressed'], prospects),
+            'contacts.csv': csv_text(['id', 'company_id', 'company', 'qualification', 'name', 'role', 'email', 'email_status', 'source_url', 'observed_at', 'deliverability'] + extra_fields, contacts),
             'account-briefs.md': '\n'.join(briefs).rstrip() + '\n',
             'outreach.md': '\n'.join(outreach).rstrip() + '\n'}
+    if d['schema_version'] == 2:
+        selected = selected_contacts(d, contact_suppressed)
+        rows = []
+        report = ['# Decision-maker research', '',
+                  'Supported people and person-attributed public routes. Source excerpts require human review; no deliverability, buying intent, or permission to send is established.', '']
+        for company in d['companies']:
+            report += [f'## {md(company["name"])}', '', f'Qualification: {company["qualification"]}', '']
+            if company_suppressed(d, company):
+                report += ['Suppressed; contact details withheld.', '']
+                continue
+            chosen = [c for c in selected if c['company_id'] == company['id']]
+            for rank, contact in enumerate(chosen, 1):
+                route = person_route(contact)
+                rows.append({'company_id': company['id'], 'company': company['name'], 'contact_id': contact['id'],
+                             'name': contact['name'], 'role': contact['role'], 'rank': rank,
+                             'role_fit': contact['role_fit'], 'selection_reason': contact['selection_reason'],
+                             'identity_status': contact['identity_status'], 'channel_type': route['type'],
+                             'channel_value': route['value'], 'channel_source': route['source_url'],
+                             'observed_at': route['observed_at'],
+                             'role_sources': ';'.join(s['url'] for s in contact['role_evidence'])})
+                report += [f'### {rank}. {md(contact["name"])} — {md(contact["role"])}',
+                           f'Fit: {contact["role_fit"]}. {md(contact["selection_reason"])}',
+                           f'Public route: {route["type"]} — {md(route["value"])}',
+                           f'Route source: {route["source_url"]} ({route["observed_at"]})',
+                           fenced(route['excerpt'])]
+                for source in contact['role_evidence']:
+                    report += [f'Role source: {source["url"]} ({source["observed_at"]}; {source["source_type"]}; current: {source["is_current"]})', fenced(source['excerpt'])]
+                report += ['']
+            if not chosen:
+                report += ['No supported, role-matched person with a personal public route selected.', '']
+            for contact in contacts:
+                if contact['company_id'] == company['id'] and contact['id'] not in {c['id'] for c in chosen}:
+                    report += [f'- Other record: {md(contact["name"] or "Unnamed inbox")} — {md(contact["role"])}; {contact["contact_kind"]}; {contact["identity_status"]}; fit: {contact["role_fit"]}. {md(contact["selection_reason"])}']
+            if campaign_folder:
+                from contact_research import get_job
+                job = get_job(campaign_folder, company)
+                report += ['', f'Stop reason: {job["stop_reason"]}; pages used: {len(job["pages"])}/{job["page_limit"]}; host searches: {len(job["queries"])}/{job["query_limit"]}; network requests: {job["network_requests"]}; page cache hits: {job["cache_hits"]}.']
+            report += ['', 'Token usage: unknown unless supplied by the host; page/character counts are not tokens.', '']
+        outputs['decision-makers.csv'] = csv_text(['company_id', 'company', 'contact_id', 'name', 'role', 'rank', 'role_fit', 'selection_reason', 'identity_status', 'channel_type', 'channel_value', 'channel_source', 'observed_at', 'role_sources'], rows)
+        outputs['contact-research.md'] = '\n'.join(report).rstrip() + '\n'
+    return outputs
 
 
 def main(argv=None):
@@ -94,7 +147,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         d = normalize(load_json(Path(args.campaign) / 'data.json'))
-        outputs = render(d)  # Validate and render everything before writing any artifact.
+        outputs = render(d, Path(args.campaign))  # Validate and render everything before writing any artifact.
         destination = Path(args.out) if args.out else Path(args.campaign) / 'exports'
         for filename, content in outputs.items():
             atomic_text(destination / filename, content)

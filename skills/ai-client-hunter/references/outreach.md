@@ -8,7 +8,7 @@ Use direct, human language. Keep internal validation explanations and qualificat
 
 Do not invent a relationship, pretend to have used the product, claim unmeasured losses or growth, imply a guaranteed result, or offer work the sender has not authorized. Use real proof points only when the sender supplied supporting material. Respect the user's contact preferences and suppression list.
 
-Store the subject, initial body, exactly two follow-up bodies, contact ID (or null), and evidence IDs. Follow-ups inherit the draft's evidence requirement: add any new factual finding to the cited records. Missing recipient email can still yield a review draft, clearly marked `needs_contact`.
+Store the subject, initial body, exactly two follow-up bodies, contact ID (or null), and evidence IDs. Follow-ups inherit the draft's evidence requirement: add any new factual finding to the cited records. In schema v2, a supported, role-matched person with an observed public professional profile or work contact page can produce `review_ready` without an email. The export labels the route for human review; these are still email drafts, not automatically converted messages or permission to send a DM. Without a supported person and route, retain `needs_contact`. Schema v1 retains its original email-based readiness rules.
 
 The exporter withholds message bodies for suppressed accounts, unqualified companies, conflicting evidence cited by the draft, or cited AI findings without provider/model/date. An unrelated unresolved finding does not block a website-based draft. If a conflict changes whether the company qualifies at all, return the company to `review`. A published recipient only produces `review_ready`, never a guarantee of inbox placement or permission to send.
 

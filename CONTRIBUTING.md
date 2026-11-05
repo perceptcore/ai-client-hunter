@@ -4,7 +4,7 @@ Help agencies find stronger reasons to start a business conversation.
 
 ## Project shape
 
-v0.1 is a host-run Agent Skill with local Python helpers. The agent performs public-source research and drafting; scripts validate and export local data. Keep the installed skill self-contained. Changes must work when only `skills/ai-client-hunter` is installed, without sibling skills or checkout-specific paths.
+v0.2 is a host-run Agent Skill with standard-library Python helpers and a bounded public HTML crawler. The agent resolves identities, roles and source meaning; code collects, caches, validates and exports. Keep the installed skill self-contained. Changes must work when only `skills/ai-client-hunter` is installed, without sibling skills or checkout-specific paths.
 
 ## Propose a change
 
@@ -16,7 +16,7 @@ Open an issue explaining the user, decision, input, expected result, and evidenc
 2. Explain the problem, resulting behavior, and relevant validation.
 3. Run `python -m unittest discover -s tests -v` with Python 3.10+.
 4. Check links and installed resource paths. Exercise changed helpers on synthetic data and inspect actual exports.
-5. For behavior changes, test missing sources, unknown contacts, suppression, and interrupted/resumed work. Do not rely on matching generated wording.
+5. For behavior changes, test missing sources, namesakes, historical roles, channel attribution, suppression and interrupted/resumed work. For collection changes, use controlled network transports and test public DNS/redirect/robots/size/rate/budget conditions. Do not run live prospect crawling in CI or rely on matching generated wording.
 
 Keep documentation in English and runtime helpers standard-library-only unless a dependency has a clear, agreed benefit. Document versioning and compatibility for data-format changes.
 

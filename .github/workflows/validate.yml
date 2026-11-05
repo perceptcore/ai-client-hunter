@@ -26,3 +26,7 @@ jobs:
         run: python skills/ai-client-hunter/scripts/prepare_campaign.py check --campaign skills/ai-client-hunter/assets/synthetic-campaign --check-only
       - name: Export synthetic artifacts
         run: python skills/ai-client-hunter/scripts/export_campaign.py --campaign skills/ai-client-hunter/assets/synthetic-campaign --out outputs/synthetic
+      - name: Validate decision-maker campaign
+        run: python skills/ai-client-hunter/scripts/prepare_campaign.py check --campaign skills/ai-client-hunter/assets/decision-maker-campaign --check-only
+      - name: Export decision-maker artifacts
+        run: python skills/ai-client-hunter/scripts/export_campaign.py --campaign skills/ai-client-hunter/assets/decision-maker-campaign --out outputs/decision-makers

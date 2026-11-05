@@ -1,0 +1,4 @@
+id,name,domain,website,qualification,reason,research_status,evidence_ids,suppressed
+northstar,Northstar Scheduling,northstar-scheduling.test,https://northstar-scheduling.test/,qualified,B2B scheduling product. Its new multi-location launch creates a specific comparison-content discussion for the stated offer.,complete,northstar-launch,False
+harbor,Harbor Operations,harbor-operations.test,https://harbor-operations.test/,review,"Product appears relevant, but target buyer and responsible contact are not established. No outreach drafted.",complete,harbor-product,False
+birch,Birch Consumer,birch-consumer.test,https://birch-consumer.test/,excluded,Consumer retail business outside the B2B software ICP.,complete,birch-store,False

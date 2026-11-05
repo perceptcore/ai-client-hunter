@@ -1,5 +1,7 @@
 # Find the right public business contact
 
+This reference describes the schema v1 email workflow. For new schema v2 campaigns and decision-maker discovery, read [contact-discovery.md](contact-discovery.md), which defines current-role evidence, professional routes, crawler budgets, and migration.
+
 Check suppression first. Identify the role responsible for the offer: a founder for a small business, or the appropriate marketing, growth, brand, communications, or commercial lead for a larger one. Do not assume job title, seniority, or ownership from a name alone.
 
 Inspect contact/about/team pages, public professional profiles, and named business directories when relevant. Verify that the person and source refer to the same business. Keep the source URL and collection date for each contact record.

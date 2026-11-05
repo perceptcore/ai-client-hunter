@@ -7,6 +7,7 @@ Human review required. No messages have been sent. Publicly listed emails have n
 Status: review_ready. Human review required; address deliverability is unverified
 
 Recipient: hello@northstar-scheduling.test
+Channel: email draft; recipient unverified
 Subject: A comparison angle for multi-location scheduling
 
 ```text

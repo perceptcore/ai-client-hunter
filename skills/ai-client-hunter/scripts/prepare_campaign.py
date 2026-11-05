@@ -14,7 +14,7 @@ import tempfile
 from datetime import date, datetime, timezone
 from urllib.parse import urlsplit, urlunsplit
 
-VERSION = 1
+VERSION = 2
 COLLECTIONS = ('companies', 'evidence', 'contacts', 'drafts', 'ai_observations')
 
 
@@ -155,8 +155,8 @@ def seed_companies(path):
 def normalize(raw):
     require(isinstance(raw, dict), 'Campaign data must be an object')
     d = copy.deepcopy(raw)
-    require(type(d.get('schema_version')) is int and d['schema_version'] == VERSION,
-            'Unsupported schema_version; expected 1')
+    require(type(d.get('schema_version')) is int and d['schema_version'] in (1, VERSION),
+            'Unsupported schema_version; expected 1 or 2')
     d['brief'] = brief_config(d.get('brief'))
     for key in COLLECTIONS:
         require(isinstance(d.get(key), list), f'{key}: expected an array')
@@ -262,6 +262,13 @@ def normalize(raw):
                 previous = by_email[address]
                 require(previous['company_id'] == r['company_id'] and previous['name'] == r['name']
                         and previous['role'] == r['role'], 'Conflicting duplicate email; resolve the account/person association')
+                if d['schema_version'] == 2:
+                    for key in ('contact_kind', 'identity_status', 'role_fit'):
+                        require(previous.get(key) == r.get(key), 'Conflicting duplicate contact decisions; resolve before saving')
+                    for key in ('role_evidence', 'channels'):
+                        merged = previous.get(key, []) + r.get(key, [])
+                        require(isinstance(merged, list), f'{key}: expected an array')
+                        previous[key] = list({json.dumps(v, sort_keys=True): v for v in merged}.values())
                 contact_aliases[r['id']] = previous['id']
                 continue
             by_email[address] = r
@@ -271,6 +278,9 @@ def normalize(raw):
         contacts.append(r)
     d['contacts'] = contacts
     ids['contacts'] = {r['id']: r for r in contacts}
+    if d['schema_version'] == 2:
+        from contact_models import validate_contacts
+        validate_contacts(d, require, text, web_url, domain, email, dated)
     for r in d['drafts']:
         text(r.get('subject'), 'draft.subject')
         text(r.get('body'), 'draft.body')
@@ -294,15 +304,15 @@ def company_suppressed(d, company):
 
 def contact_suppressed(d, contact):
     company = next(c for c in d['companies'] if c['id'] == contact['company_id'])
-    address = contact.get('email')
+    addresses = [contact.get('email')] + [c.get('value') for c in contact.get('channels', []) if c.get('type') == 'email']
     if company_suppressed(d, company):
         return True
-    if not address:
-        return False
-    email_domain = domain(address.rsplit('@', 1)[1])
-    return (address.casefold() in d['suppression']['emails'] or
-            any(email_domain == host or email_domain.endswith('.' + host)
-                for host in d['suppression']['domains']))
+    for address in filter(None, addresses):
+        email_domain = domain(address.rsplit('@', 1)[1])
+        if (address.casefold() in d['suppression']['emails'] or
+                any(email_domain == host or email_domain.endswith('.' + host) for host in d['suppression']['domains'])):
+            return True
+    return False
 
 
 def draft_state(d, draft):
@@ -321,6 +331,12 @@ def draft_state(d, draft):
             obs = next(o for o in d['ai_observations'] if o['id'] == e['ai_observation_id'])
             if not all(obs.get(k) for k in ('provider', 'model', 'collected_at')):
                 return 'held', 'AI finding lacks provider, model or collection date'
+    if d['schema_version'] == 2:
+        from contact_models import person_route
+        route = person_route(contact) if contact and contact.get('role_fit') in ('primary', 'fallback') else None
+        if not route:
+            return 'needs_contact', 'No supported decision maker with a person-attributed public route'
+        return 'review_ready', f'Human review required; public {route["type"]} route, no messages sent'
     if not contact or not contact.get('email'):
         return 'needs_contact', 'No publicly listed recipient email; review draft only'
     return 'review_ready', 'Human review required; address deliverability is unverified'
@@ -329,7 +345,7 @@ def draft_state(d, draft):
 def save_campaign(folder, data):
     folder = Path(folder)
     atomic_json(folder / 'data.json', data)
-    checkpoint = {'schema_version': VERSION, 'updated_at': datetime.now(timezone.utc).isoformat(),
+    checkpoint = {'schema_version': data['schema_version'], 'updated_at': datetime.now(timezone.utc).isoformat(),
                   'completed_company_ids': [c['id'] for c in data['companies'] if c['research_status'] == 'complete'],
                   'remaining_company_ids': [c['id'] for c in data['companies'] if c['research_status'] == 'pending']}
     atomic_json(folder / 'checkpoint.json', checkpoint)
@@ -351,6 +367,8 @@ def main(argv=None):
     imp = sub.add_parser('import', help='Add seed websites while preserving researched records')
     imp.add_argument('--campaign', required=True)
     imp.add_argument('--websites', required=True)
+    migration = sub.add_parser('migrate', help='Back up v1 data and explicitly upgrade to v2')
+    migration.add_argument('--campaign', required=True)
     args = parser.parse_args(argv)
     folder = Path(args.campaign)
     try:
@@ -359,6 +377,13 @@ def main(argv=None):
             d = {'schema_version': VERSION, 'brief': load_json(args.brief),
                  'suppression': suppression_csv(args.suppression), **{k: [] for k in COLLECTIONS}}
             d['companies'] = seed_companies(args.websites)
+        elif args.command == 'migrate':
+            from contact_models import migrate_v1
+            raw = load_json(folder / 'data.json')
+            d = normalize(migrate_v1(normalize(raw)))
+            backup = folder / 'data.v1.backup.json'
+            require(not backup.exists(), 'Migration backup already exists; refusing to overwrite it')
+            atomic_text(backup, (folder / 'data.json').read_bytes().decode('utf-8'))
         else:
             d = normalize(load_json(folder / 'data.json'))
             if args.command == 'import':

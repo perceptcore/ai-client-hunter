@@ -1,15 +1,15 @@
 ---
 name: ai-client-hunter
-description: Research B2B prospects, qualify evidence-backed opportunities, find public business contacts, and draft cold outreach. Use for client prospecting, account research, contact discovery, or outreach drafting; includes an AI visibility agency workflow. Produces review artifacts, not sent campaigns.
+description: Find role-matched B2B decision makers and their evidenced public professional routes, with bounded crawling, cache, identity checks and resumable research. Also supports prospect qualification and draft outreach, including AI visibility agencies. Use for client prospecting, account research, contact discovery or outreach drafting; does not send messages.
 license: MIT
 metadata:
   author: perceptcore
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # AI Client Hunter
 
-Find a reason to contact a business before writing the email. Use the host agent's reasoning and available search/browser tools; the bundled Python helpers only manage local data and exports. They do not browse, call models, verify deliverability, or send messages.
+Find the person who can act and the evidence behind that choice. Use the host agent's reasoning/search/browser tools plus the bounded public HTML crawler. Python handles collection, cache, budgets, data and exports; it never calls models, verifies deliverability or sends messages.
 
 ## Start with the requested outcome
 
@@ -24,7 +24,7 @@ Read [data-format.md](references/data-format.md) before creating or changing cam
 ## Choose the relevant workflow
 
 - **Find or qualify companies:** read [research.md](references/research.md). Use public sources and record the reason each account fits the offer. Import a website CSV when available.
-- **Find contacts:** read [contacts.md](references/contacts.md). Find the responsible role and a published business contact. Keep unknowns explicit; do not generate email permutations or make SMTP probes.
+- **Find contacts:** read [contact-discovery.md](references/contact-discovery.md). Resolve person, current role and company before selecting a public personal route. Use bounded crawl/inspect batches, log host searches/pages, and stop once a supported person and route are found. Generic/support inboxes and company forms are separate context, not named-person successes.
 - **Draft outreach:** read [outreach.md](references/outreach.md). Produce one initial message and two follow-ups tied to cited findings. This workflow ends at drafts for human review.
 - **AI visibility opportunities:** additionally read [ai-visibility.md](references/ai-visibility.md). Preserve the prompt and original answer, distinguish models/interfaces, and limit claims to the collected observations.
 
@@ -38,7 +38,7 @@ Read `data.json` and `checkpoint.json` when resuming. Update only the researched
 
 Check suppression before researching a seed, before contact discovery, and before drafting. Research up to the configured batch size, then run `scripts/prepare_campaign.py check --campaign <directory>` to normalize data and rebuild the checkpoint. Also checkpoint before a handoff or when a smaller requested batch ends. Add seed CSV rows through `import` rather than reinitializing an existing campaign.
 
-Run `scripts/export_campaign.py --campaign <directory>` to create the four review artifacts. Review the actual outputs: suppressed or excluded accounts must not receive exported outreach; missing contacts, conflicts, and incomplete AI metadata must remain visible. Structural validation does not prove that a source supports a claim—inspect the evidence yourself.
+New campaigns use schema v2. Explicitly migrate v1 campaigns with the backup-producing `migrate` command; legacy contacts remain unverified until reviewed. Run `scripts/export_campaign.py --campaign <directory>` for the four existing artifacts plus `decision-makers.csv` and `contact-research.md` on v2 campaigns. Review the actual outputs: suppressed/excluded accounts do not receive exported outreach; source conflicts and missing identity/channel evidence remain visible. Structural validation does not prove a source supports a claim—inspect it yourself.
 
 ## Execution boundaries
 
@@ -48,4 +48,4 @@ Do not buy credits, introduce paid enrichment dependencies, upload private campa
 
 ## Handoff
 
-Report researched/qualified/review/excluded counts, contacts with published emails, unresolved gaps, and remaining target count. Link the four exports and say they are drafts. Distinguish a named contact from a generic inbox, and a published address from verified deliverability. For AI findings, state the actual sample and collection limitations. Keep the user's data local and out of the public repository.
+Report supported role-matched people with public personal routes, named-person emails, generic/company alternatives, unresolved identities, pages/searches/cache hits and remaining target count. Link the exports and say they are review drafts. State exact token usage only if the host exposes it; do not relabel page/character counts as tokens. For AI findings state the actual sample and limitations. Keep user data local and out of the public repository.

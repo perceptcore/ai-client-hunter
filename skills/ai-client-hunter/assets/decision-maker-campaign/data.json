@@ -1,0 +1,188 @@
+{
+  "schema_version": 2,
+  "brief": {
+    "icp": "Independent B2B software companies serving small businesses",
+    "offer": "Research-led positioning and comparison-page copy",
+    "markets": [
+      "United States"
+    ],
+    "contact_roles": [
+      "Founder",
+      "Head of Marketing"
+    ],
+    "target_count": 3,
+    "batch_size": 10,
+    "outreach_language": "English"
+  },
+  "suppression": {
+    "domains": [],
+    "emails": []
+  },
+  "companies": [
+    {
+      "id": "northstar",
+      "name": "Northstar Scheduling",
+      "website": "https://northstar-scheduling.test/",
+      "qualification": "qualified",
+      "reason": "B2B scheduling product. Its new multi-location launch creates a specific comparison-content discussion for the stated offer.",
+      "evidence_ids": [
+        "northstar-launch"
+      ],
+      "research_status": "complete"
+    },
+    {
+      "id": "harbor",
+      "name": "Harbor Operations",
+      "website": "https://harbor-operations.test/",
+      "qualification": "review",
+      "reason": "Product appears relevant, but target buyer and responsible contact are not established. No outreach drafted.",
+      "evidence_ids": [
+        "harbor-product"
+      ],
+      "research_status": "complete"
+    },
+    {
+      "id": "birch",
+      "name": "Birch Consumer",
+      "website": "https://birch-consumer.test/",
+      "qualification": "excluded",
+      "reason": "Consumer retail business outside the B2B software ICP.",
+      "evidence_ids": [
+        "birch-store"
+      ],
+      "research_status": "complete"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "northstar-launch",
+      "company_id": "northstar",
+      "kind": "business",
+      "finding": "Synthetic scenario: the company announced multi-location scheduling for small service teams.",
+      "url": "https://northstar-scheduling.test/updates/multi-location",
+      "observed_at": "2026-11-06",
+      "status": "observed"
+    },
+    {
+      "id": "harbor-product",
+      "company_id": "harbor",
+      "kind": "business",
+      "finding": "Synthetic scenario: operations software is described, but buyer size is unclear.",
+      "url": "https://harbor-operations.test/product",
+      "observed_at": "2026-11-06",
+      "status": "observed"
+    },
+    {
+      "id": "birch-store",
+      "company_id": "birch",
+      "kind": "business",
+      "finding": "Synthetic scenario: the website sells household goods to consumers.",
+      "url": "https://birch-consumer.test/about",
+      "observed_at": "2026-11-06",
+      "status": "observed"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "northstar-inbox",
+      "company_id": "northstar",
+      "name": "",
+      "role": "General business inbox",
+      "email": "hello@northstar-scheduling.test",
+      "email_status": "publicly_listed",
+      "source_url": "https://northstar-scheduling.test/contact",
+      "observed_at": "2026-11-06",
+      "contact_kind": "generic_inbox",
+      "identity_status": "legacy_unverified",
+      "role_fit": "unknown",
+      "selection_reason": "Imported from v1; identity and role evidence need review",
+      "role_evidence": [],
+      "channels": [
+        {
+          "type": "email",
+          "value": "hello@northstar-scheduling.test",
+          "source_url": "https://northstar-scheduling.test/contact",
+          "excerpt": "Legacy public email record: hello@northstar-scheduling.test",
+          "observed_at": "2026-11-06",
+          "status": "unconfirmed",
+          "attribution": "company"
+        }
+      ]
+    },
+    {
+      "id": "northstar-jo",
+      "company_id": "northstar",
+      "name": "Jo Ellis",
+      "role": "Head of Marketing",
+      "email": null,
+      "email_status": "not_found",
+      "source_url": "https://northstar-scheduling.test/team",
+      "observed_at": "2026-11-06",
+      "contact_kind": "person",
+      "identity_status": "supported",
+      "role_fit": "primary",
+      "selection_reason": "Owns marketing; matches the comparison-content offer and requested role.",
+      "role_evidence": [
+        {
+          "url": "https://northstar-scheduling.test/team",
+          "excerpt": "Jo Ellis is Head of Marketing at Northstar Scheduling. Professional profile: https://profiles.test/jo-ellis",
+          "observed_at": "2026-11-06",
+          "source_type": "official_company",
+          "is_current": true
+        }
+      ],
+      "channels": [
+        {
+          "type": "professional_profile",
+          "value": "https://profiles.test/jo-ellis",
+          "source_url": "https://northstar-scheduling.test/team",
+          "excerpt": "Jo Ellis — professional profile: https://profiles.test/jo-ellis",
+          "observed_at": "2026-11-06",
+          "status": "observed",
+          "attribution": "person"
+        }
+      ]
+    },
+    {
+      "id": "northstar-lee",
+      "company_id": "northstar",
+      "name": "Lee Morgan",
+      "role": "Founder",
+      "email": null,
+      "email_status": "not_found",
+      "source_url": "https://northstar-scheduling.test/history",
+      "observed_at": "2026-11-06",
+      "contact_kind": "person",
+      "identity_status": "historical",
+      "role_fit": "fallback",
+      "selection_reason": "Historical founder record; no current company role established.",
+      "role_evidence": [
+        {
+          "url": "https://northstar-scheduling.test/history",
+          "excerpt": "Lee Morgan was Founder of Northstar Scheduling before leaving the business.",
+          "observed_at": "2026-11-06",
+          "source_type": "official_company",
+          "is_current": false
+        }
+      ],
+      "channels": []
+    }
+  ],
+  "drafts": [
+    {
+      "id": "northstar-draft",
+      "company_id": "northstar",
+      "contact_id": "northstar-jo",
+      "evidence_ids": [
+        "northstar-launch"
+      ],
+      "subject": "A comparison angle for multi-location scheduling",
+      "body": "Hi Jo,\n\nYour multi-location launch gives buyers a concrete question: how does scheduling across locations differ from running separate calendars?\n\nI write research-led positioning and comparison pages for B2B software. I would start with that buying decision, showing which teams need the new capability and which can stay with a simpler setup.\n\nWould you like a short outline for that comparison page?",
+      "followups": [
+        "Hi Jo,\n\nOne angle for the outline: compare a shared multi-location workflow with separate calendars using the buyer's operating needs. Would you like me to send the proposed structure?",
+        "Hi Jo,\n\nA useful comparison should also tell buyers when separate calendars are enough. I can include that decision in the outline, so the page answers the buying question directly. Shall I send it?"
+      ]
+    }
+  ],
+  "ai_observations": []
+}
