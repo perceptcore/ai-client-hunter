@@ -3,8 +3,7 @@ name: ai-client-hunter
 description: Research B2B prospects, find relevant decision makers and public professional contact routes, and draft outreach grounded in company evidence. Use for client prospecting, account research, contact discovery or cold-email drafting.
 license: MIT
 metadata:
-  author: perceptcore
-  version: "0.3.0"
+  version: "0.3.1"
 ---
 
 # AI Client Hunter

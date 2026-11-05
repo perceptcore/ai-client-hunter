@@ -1,8 +1,10 @@
 # AI Client Hunter
 
-**Find relevant companies. Identify the right person. Give them a reason to reply.**
+**You shipped the product. Now find someone to sell it to.**
 
-A lightweight AI skill for B2B prospect research, public contact discovery and evidence-based outreach drafts. It uses the search and browser tools already available in your agent.
+Give Claude Code or Codex a prospecting job. AI Client Hunter takes your offer, researches companies worth approaching, finds the people responsible, and drafts an opening backed by sources.
+
+Built for founders, agencies and consultants who need a concrete answer to: who should I contact, and why would they care?
 
 ## Install
 
@@ -18,34 +20,39 @@ npx skills add perceptcore/ai-client-hunter --skill ai-client-hunter --agent cod
 
 The installer needs Node.js/npm. You can also copy the complete [skill folder](skills/ai-client-hunter) into your agent's skills directory. The skill requires no Python runtime, API keys or paid enrichment service. Live research uses your agent's existing tools and normal usage allowance.
 
-## Use
+## Give it a job
 
 ```text
-Use $ai-client-hunter to research 10 UK B2B software companies.
-My offer is positioning and comparison-page writing.
-Find founders or marketing leads with a public professional contact route.
-Keep sources and draft an initial email plus two follow-ups in English.
-Save the research and drafts under campaigns/uk-software.
+Use $ai-client-hunter to find 10 UK B2B SaaS companies I could pitch.
+I research and write comparison pages for software buyers.
+Find the founder or marketing owner, a public contact route,
+and one source-backed reason my offer fits.
+Draft a short first email and two follow-ups in English.
+Save the shortlist and drafts under campaigns/uk-software.
 ```
 
-You can also supply a website list, continue existing research, find contacts for known accounts, or draft from supplied findings.
+Already have a company list? Hand it over. You can run research, contact discovery or drafting separately and continue earlier work.
 
-The output is a prospect CSV and outreach Markdown, or a table for a small request. Research includes company fit, the relevant finding, named person and role, public route, source URLs/date and unresolved gaps. Generic inboxes stay separate from personal contacts. Messages remain drafts for review.
+## Open the shortlist
 
-## Scope
+| What you get | The question it answers |
+| --- | --- |
+| Company fit and reason | Is this business relevant to the offer? |
+| A specific finding with sources | Why approach this company? |
+| Named person, role and public route | Who owns the decision, and where can I find them? |
+| First email and two follow-ups | How do I open the conversation? |
+| Missing or conflicting evidence | What still needs checking? |
 
-The current v0.3 package contains [one instruction file](skills/ai-client-hunter/SKILL.md), agent UI metadata and its MIT license. It has no custom crawler, cache, Python helpers, campaign schema or mandatory export pipeline. Earlier implementations remain in Git history; existing user-owned campaign files are not changed by this release.
+Save the shortlist as CSV and the drafts as Markdown, or request a table for a small run. A public profile can be the route when no email is found. Generic support inboxes are labelled separately. Drafts stay open for human review.
 
-The skill does not guess emails, probe mail servers, buy credits or send messages. It makes no claim of higher accuracy, lower token cost or better conversion than ordinary AI research.
+## What runs
+
+The [skill](skills/ai-client-hunter/SKILL.md) is a Markdown workflow. Your agent does the research with its existing search and browser tools. You keep the files. There is no separate server or enrichment account to set up.
+
+It researches and drafts; it does not guess addresses, probe mail servers or send messages. Published contacts still need review. Research quality depends on the host agent, available tools and public evidence; no conversion or cost advantage has been measured.
 
 ## Contribute
 
 Improve the [instructions](skills/ai-client-hunter/SKILL.md) with a concrete research problem and a concise correction. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Use synthetic examples in public issues and contributions.
 
-## PerceptCore
-
-**[PerceptCore — AI Brand Intelligence](https://perceptcore.com/)**
-
-*Shape how AI sees your brand.*
-
-[MIT](LICENSE) — Copyright (c) 2026 PerceptCore.
+[MIT](LICENSE)
